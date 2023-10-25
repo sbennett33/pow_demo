@@ -30,6 +30,7 @@ config :pow_demo, PowDemoWeb.Endpoint,
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
 config :pow_demo, PowDemo.Mailer, adapter: Swoosh.Adapters.Local
+config :pow_demo, PowDemoWeb.Pow.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
@@ -63,7 +64,10 @@ config :phoenix, :json_library, Jason
 
 config :pow_demo, :pow,
   user: PowDemo.Users.User,
-  repo: PowDemo.Repo
+  repo: PowDemo.Repo,
+  mailer_backend: PowDemoWeb.Pow.Mailer,
+  extensions: [PowResetPassword, PowEmailConfirmation],
+  controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
